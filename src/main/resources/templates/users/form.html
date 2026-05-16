@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta th:name="description" th:content="${isEdit} ? 'Edit User — WebApp Admin' : 'Add New User — WebApp Admin'">
+  <title th:text="${isEdit} ? 'Edit User | WebApp Admin' : 'Add User | WebApp Admin'">User Form | WebApp Admin</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+  <!-- Admin Navbar -->
+  <nav th:replace="~{layout :: admin-navbar}"></nav>
+
+  <main class="admin-main">
+    <div class="page-container page-container--narrow">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" id="form-breadcrumb">
+        <a th:href="@{/users}">Users</a>
+        <span>/</span>
+        <span th:text="${isEdit} ? 'Edit User' : 'Add New User'">Add New User</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="page-title" th:text="${isEdit} ? 'Edit User' : 'Add New User'">Add New User</h1>
+      </div>
+
+      <!-- Form Card -->
+      <div class="form-card" id="user-form-card">
+
+        <form th:action="${isEdit} ? @{/users/edit/{id}(id=${userId})} : @{/users/add}"
+              th:object="${userDto}"
+              method="post"
+              id="user-form"
+              class="user-form"
+              novalidate>
+
+          <!-- Name -->
+          <div class="form-group">
+            <label for="form-name" class="form-label">Full Name <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+              <input type="text"
+                     id="form-name"
+                     th:field="*{name}"
+                     th:class="${#fields.hasErrors('name')} ? 'form-input input-error' : 'form-input'"
+                     placeholder="John Doe"
+                     autocomplete="name">
+            </div>
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="field-error"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="form-email" class="form-label">Email Address <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <span class="input-icon">✉</span>
+              <input type="email"
+                     id="form-email"
+                     th:field="*{email}"
+                     th:class="${#fields.hasErrors('email')} ? 'form-input input-error' : 'form-input'"
+                     placeholder="john@example.com"
+                     autocomplete="email">
+            </div>
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="field-error"></span>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="form-password" class="form-label">
+              Password
+              <span th:if="${isEdit}" class="form-label-hint">(leave blank to keep current)</span>
+              <span th:if="${!isEdit}" class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password"
+                     id="form-password"
+                     th:field="*{password}"
+                     th:class="${#fields.hasErrors('password')} ? 'form-input input-error' : 'form-input'"
+                     placeholder="At least 6 characters"
+                     autocomplete="new-password">
+            </div>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="field-error"></span>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <label for="form-phone" class="form-label">Phone Number <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <span class="input-icon">📱</span>
+              <input type="tel"
+                     id="form-phone"
+                     th:field="*{phone}"
+                     th:class="${#fields.hasErrors('phone')} ? 'form-input input-error' : 'form-input'"
+                     placeholder="+62 812 3456 7890"
+                     autocomplete="tel">
+            </div>
+            <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="field-error"></span>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <a th:href="@{/users}" class="btn-cancel" id="btn-cancel">Cancel</a>
+            <button type="submit" class="btn-save" id="btn-save"
+                    th:text="${isEdit} ? 'Save Changes' : 'Add User'">
+              Add User
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer th:replace="~{layout :: footer}"></footer>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--
+  users/list.html — Users Management Page
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="User Management — WebApp Admin">
+  <title>Users | WebApp Admin</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+  <!-- Admin Navbar -->
+  <nav th:replace="~{layout :: admin-navbar}"></nav>
+
+  <main class="admin-main">
+    <div class="page-container">
+
+      <!-- Page Header -->
+      <div class="page-header" id="users-page-header">
+        <div class="page-header-left">
+          <h1 class="page-title">User Management</h1>
+          <span class="badge-count" th:text="${totalUsers} + ' users'" id="users-count-badge">0 users</span>
+        </div>
+        <a th:href="@{/users/add}" class="btn-add" id="btn-add-user">
+          <span>＋</span> Add New User
+        </a>
+      </div>
+
+      <!-- Flash Messages -->
+      <div th:if="${successMessage}" class="alert alert-success alert-dismissible" id="alert-success">
+        <span>✓</span>
+        <span th:text="${successMessage}"></span>
+        <button class="alert-close" onclick="this.parentElement.remove()" type="button">✕</button>
+      </div>
+      <div th:if="${errorMessage}" class="alert alert-error alert-dismissible" id="alert-error">
+        <span>✕</span>
+        <span th:text="${errorMessage}"></span>
+        <button class="alert-close" onclick="this.parentElement.remove()" type="button">✕</button>
+      </div>
+
+      <!-- Users Table -->
+      <div class="table-card" id="users-table-card">
+
+        <!-- Empty state -->
+        <div th:if="${#lists.isEmpty(users)}" class="empty-state" id="empty-state">
+          <div class="empty-icon">👥</div>
+          <h3>No users yet</h3>
+          <p>Get started by adding your first user.</p>
+          <a th:href="@{/users/add}" class="btn-add">Add New User</a>
+        </div>
+
+        <!-- Table -->
+        <div th:if="${!#lists.isEmpty(users)}" class="table-responsive">
+          <table class="data-table" id="users-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Created At</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="user, stat : ${users}" th:id="'user-row-' + ${user.id}">
+                <td class="td-index" th:text="${stat.index + 1}">1</td>
+
+                <!-- Avatar + Name -->
+                <td class="td-name">
+                  <div class="table-user-cell">
+                    <div class="table-avatar" th:text="${user.name.substring(0,1).toUpperCase()}">A</div>
+                    <span th:text="${user.name}">Name</span>
+                  </div>
+                </td>
+
+                <td th:text="${user.email}" class="td-email">email@example.com</td>
+                <td th:text="${user.phone}" class="td-phone">+62812...</td>
+
+                <td th:text="${user.createdAt != null ? #temporals.format(user.createdAt, 'dd MMM yyyy') : '—'}"
+                    class="td-date">01 Jan 2024</td>
+
+                <!-- Actions -->
+                <td class="td-actions">
+                  <a th:href="@{/users/edit/{id}(id=${user.id})}"
+                     class="action-btn btn-edit"
+                     th:id="'btn-edit-' + ${user.id}">
+                    ✏ Edit
+                  </a>
+
+                  <!-- Delete via form POST -->
+                  <form th:action="@{/users/delete/{id}(id=${user.id})}"
+                        method="post"
+                        style="display:inline"
+                        th:id="'form-delete-' + ${user.id}"
+                        onsubmit="return confirm('Delete this user? This action cannot be undone.')">
+                    <button type="submit"
+                            class="action-btn btn-delete"
+                            th:id="'btn-delete-' + ${user.id}">
+                      🗑 Delete
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer th:replace="~{layout :: footer}"></footer>
+
+</body>
+</html>

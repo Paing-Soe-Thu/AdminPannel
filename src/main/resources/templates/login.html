@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--
+  login.html — Admin Login Page
+  Standalone page (no layout fragment needed — auth pages have their own minimal structure)
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Admin Login — WebApp">
+  <title>Login | WebApp Admin</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="auth-body">
+
+  <!-- Animated background blobs -->
+  <div class="auth-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="auth-wrapper">
+    <div class="auth-card" id="login-card">
+
+      <!-- Logo / Brand -->
+      <div class="auth-brand">
+        <div class="auth-brand-icon">⚡</div>
+        <span>WebApp Admin</span>
+      </div>
+
+      <h1 class="auth-title">Welcome back</h1>
+      <p class="auth-subtitle">Sign in to your admin account</p>
+
+      <!-- Flash: success (e.g. after register) -->
+      <div th:if="${successMessage}" class="alert alert-success" id="alert-success">
+        <span>✓</span>
+        <span th:text="${successMessage}"></span>
+      </div>
+
+      <!-- Flash: error -->
+      <div th:if="${errorMessage}" class="alert alert-error" id="alert-error">
+        <span>✕</span>
+        <span th:text="${errorMessage}"></span>
+      </div>
+
+      <form th:action="@{/login}" th:object="${loginDto}" method="post" class="auth-form" id="login-form" novalidate>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="login-email" class="form-label">Email address</label>
+          <div class="input-wrapper">
+            <span class="input-icon">✉</span>
+            <input type="email"
+                   id="login-email"
+                   th:field="*{email}"
+                   th:class="${#fields.hasErrors('email')} ? 'form-input input-error' : 'form-input'"
+                   placeholder="admin@example.com"
+                   autocomplete="email">
+          </div>
+          <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="field-error"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="login-password" class="form-label">Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input type="password"
+                   id="login-password"
+                   th:field="*{password}"
+                   th:class="${#fields.hasErrors('password')} ? 'form-input input-error' : 'form-input'"
+                   placeholder="••••••••"
+                   autocomplete="current-password">
+          </div>
+          <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="field-error"></span>
+        </div>
+
+        <button type="submit" class="btn-auth" id="btn-login">Sign In →</button>
+
+      </form>
+
+      <p class="auth-footer-text">
+        Don't have an account?
+        <a th:href="@{/register}" id="link-to-register">Create one here</a>
+      </p>
+
+    </div>
+  </div>
+
+</body>
+</html>

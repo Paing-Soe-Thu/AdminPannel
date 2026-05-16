@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" th:content="${pageDescription} ?: 'A modern Spring Boot web application.'">
+  <title th:text="${pageTitle} ?: 'WebApp'">WebApp</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <th:block th:replace="${pageHead} ?: ~{}"></th:block>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════ PUBLIC NAVBAR ═══════════════════════════ -->
+  <nav class="navbar" th:fragment="navbar">
+    <div class="navbar-inner">
+      <a class="navbar-brand" th:href="@{/}">⚡ WebApp</a>
+      <ul class="nav-links">
+        <li>
+          <a th:href="@{/}"
+             th:classappend="${activePage == 'home'} ? ' active' : ''"
+             id="nav-home">Home</a>
+        </li>
+        <li>
+          <a th:href="@{/features}"
+             th:classappend="${activePage == 'features'} ? ' active' : ''"
+             id="nav-features">Features</a>
+        </li>
+        <li>
+          <a th:href="@{/about}"
+             th:classappend="${activePage == 'about'} ? ' active' : ''"
+             id="nav-about">About</a>
+        </li>
+      </ul>
+      <a class="nav-cta" th:href="@{/login}" id="nav-cta">Sign In →</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════ ADMIN NAVBAR ════════════════════════════ -->
+  <nav class="navbar" th:fragment="admin-navbar">
+    <div class="navbar-inner">
+
+      <!-- Brand -->
+      <a class="navbar-brand" th:href="@{/dashboard}">⚡ WebApp Admin</a>
+
+      <!-- Nav links -->
+      <ul class="nav-links">
+        <li>
+          <a th:href="@{/dashboard}"
+             th:classappend="${activePage == 'dashboard'} ? ' active' : ''"
+             id="admin-nav-dashboard">Dashboard</a>
+        </li>
+        <li>
+          <a th:href="@{/users}"
+             th:classappend="${activePage == 'users'} ? ' active' : ''"
+             id="admin-nav-users">Users</a>
+        </li>
+      </ul>
+
+      <!-- Right side actions -->
+      <div class="admin-nav-right">
+        <a th:href="@{/users/add}" class="btn-nav-add" id="admin-nav-add-user">
+          ＋ Add New User
+        </a>
+        <!-- Current user -->
+        <div class="nav-user-chip" id="nav-user-chip">
+          <div class="nav-user-avatar"
+               th:if="${loggedInUser != null}"
+               th:text="${loggedInUser.name.substring(0,1).toUpperCase()}">A</div>
+          <span th:if="${loggedInUser != null}" th:text="${loggedInUser.name}" class="nav-user-name">Admin</span>
+        </div>
+        <a th:href="@{/logout}" class="nav-logout" id="admin-nav-logout">Logout</a>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════ MAIN CONTENT ═══════════════════════════ -->
+  <main>
+    <th:block th:replace="${pageContent} ?: ~{}"></th:block>
+  </main>
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer th:fragment="footer">
+    <p>
+      &copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2024</span>
+      <strong>WebApp Admin</strong> &mdash; Built with
+      <a href="https://spring.io/projects/spring-boot" target="_blank" rel="noopener">Spring Boot</a>
+      &amp;
+      <a href="https://www.thymeleaf.org" target="_blank" rel="noopener">Thymeleaf</a>
+    </p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--
+  dashboard.html — Welcome / Dashboard page (session-guarded)
+  Uses admin nav fragment from layout.html
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Admin Dashboard — WebApp">
+  <title>Dashboard | WebApp Admin</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+  <!-- Admin Navbar -->
+  <nav th:replace="~{layout :: admin-navbar}"></nav>
+
+  <main class="admin-main">
+
+    <!-- Welcome Banner -->
+    <section class="dashboard-hero">
+      <div class="dashboard-hero-inner">
+        <div class="dashboard-welcome">
+          <div class="dashboard-avatar" id="dashboard-avatar">
+            <span th:text="${loggedInUser.name.substring(0,1).toUpperCase()}">A</span>
+          </div>
+          <div>
+            <p class="dashboard-greeting">Good to see you back 👋</p>
+            <h1 class="dashboard-name" th:text="'Welcome, ' + ${loggedInUser.name} + '!'">Welcome, Admin!</h1>
+            <p class="dashboard-email" th:text="${loggedInUser.email}">admin@example.com</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Cards -->
+    <section class="dashboard-stats" id="dashboard-stats">
+      <div class="dashboard-inner">
+
+        <div class="stat-card" id="stat-total-users">
+          <div class="stat-card-icon">👥</div>
+          <div class="stat-card-body">
+            <div class="stat-card-number" th:text="${totalUsers}">0</div>
+            <div class="stat-card-label">Total Users</div>
+          </div>
+        </div>
+
+        <div class="stat-card" id="stat-active">
+          <div class="stat-card-icon">✅</div>
+          <div class="stat-card-body">
+            <div class="stat-card-number">Live</div>
+            <div class="stat-card-label">System Status</div>
+          </div>
+        </div>
+
+        <div class="stat-card" id="stat-db">
+          <div class="stat-card-icon">🗄️</div>
+          <div class="stat-card-body">
+            <div class="stat-card-number">MySQL</div>
+            <div class="stat-card-label">Database</div>
+          </div>
+        </div>
+
+        <div class="stat-card" id="stat-framework">
+          <div class="stat-card-icon">🚀</div>
+          <div class="stat-card-body">
+            <div class="stat-card-number">Spring</div>
+            <div class="stat-card-label">Backend</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="dashboard-actions" id="dashboard-actions">
+      <div class="dashboard-inner">
+        <h2 class="section-heading">Quick Actions</h2>
+        <div class="actions-grid">
+          <a th:href="@{/users}" class="action-card" id="action-view-users">
+            <div class="action-icon">👥</div>
+            <div class="action-label">Manage Users</div>
+            <div class="action-desc">View, edit, and delete users</div>
+          </a>
+          <a th:href="@{/users/add}" class="action-card" id="action-add-user">
+            <div class="action-icon">➕</div>
+            <div class="action-label">Add New User</div>
+            <div class="action-desc">Create a new user account</div>
+          </a>
+          <a th:href="@{/logout}" class="action-card action-logout" id="action-logout">
+            <div class="action-icon">🚪</div>
+            <div class="action-label">Logout</div>
+            <div class="action-desc">End your current session</div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer th:replace="~{layout :: footer}"></footer>
+
+</body>
+
+</html>

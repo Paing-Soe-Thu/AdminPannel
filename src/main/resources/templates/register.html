@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--
+  register.html — Admin Register Page
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create Admin Account — WebApp">
+  <title>Register | WebApp Admin</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="auth-body">
+
+  <!-- Animated background blobs -->
+  <div class="auth-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="auth-wrapper">
+    <div class="auth-card" id="register-card">
+
+      <!-- Logo / Brand -->
+      <div class="auth-brand">
+        <div class="auth-brand-icon">⚡</div>
+        <span>WebApp Admin</span>
+      </div>
+
+      <h1 class="auth-title">Create account</h1>
+      <p class="auth-subtitle">Fill in your details to get started</p>
+
+      <!-- Error flash -->
+      <div th:if="${errorMessage}" class="alert alert-error" id="alert-error">
+        <span>✕</span>
+        <span th:text="${errorMessage}"></span>
+      </div>
+
+      <form th:action="@{/register}" th:object="${userDto}" method="post" class="auth-form" id="register-form" novalidate>
+
+        <!-- Name -->
+        <div class="form-group">
+          <label for="reg-name" class="form-label">Full Name</label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <input type="text"
+                   id="reg-name"
+                   th:field="*{name}"
+                   th:class="${#fields.hasErrors('name')} ? 'form-input input-error' : 'form-input'"
+                   placeholder="John Doe"
+                   autocomplete="name">
+          </div>
+          <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="field-error"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="reg-email" class="form-label">Email address</label>
+          <div class="input-wrapper">
+            <span class="input-icon">✉</span>
+            <input type="email"
+                   id="reg-email"
+                   th:field="*{email}"
+                   th:class="${#fields.hasErrors('email')} ? 'form-input input-error' : 'form-input'"
+                   placeholder="you@example.com"
+                   autocomplete="email">
+          </div>
+          <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="field-error"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="reg-password" class="form-label">Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input type="password"
+                   id="reg-password"
+                   th:field="*{password}"
+                   th:class="${#fields.hasErrors('password')} ? 'form-input input-error' : 'form-input'"
+                   placeholder="At least 6 characters"
+                   autocomplete="new-password">
+          </div>
+          <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="field-error"></span>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label for="reg-phone" class="form-label">Phone Number</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📱</span>
+            <input type="tel"
+                   id="reg-phone"
+                   th:field="*{phone}"
+                   th:class="${#fields.hasErrors('phone')} ? 'form-input input-error' : 'form-input'"
+                   placeholder="+62 812 3456 7890"
+                   autocomplete="tel">
+          </div>
+          <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="field-error"></span>
+        </div>
+
+        <button type="submit" class="btn-auth" id="btn-register">Create Account →</button>
+
+      </form>
+
+      <p class="auth-footer-text">
+        Already have an account?
+        <a th:href="@{/login}" id="link-to-login">Sign in here</a>
+      </p>
+
+    </div>
+  </div>
+
+</body>
+</html>

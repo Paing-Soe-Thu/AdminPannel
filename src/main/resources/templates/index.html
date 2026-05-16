@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--
+  index.html — Home page
+  Uses layout.html fragments: navbar + footer.
+  The page body is inline here; layout provides nav & footer.
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="WebApp — A modern, blazing-fast Spring Boot web application.">
+  <title>Home | WebApp</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+  <!-- ── Navbar (reused from layout) ── -->
+  <nav th:replace="~{layout :: navbar}" class="navbar"></nav>
+
+  <!-- ── Main Content ── -->
+  <main>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+
+      <span class="hero-badge">
+        ✦ Spring Boot + Thymeleaf
+      </span>
+
+      <h1 class="hero-title">
+        Build something <span>extraordinary</span> today
+      </h1>
+
+      <p class="hero-subtitle">
+        A blazing-fast, modern web application powered by Spring Boot and Thymeleaf.
+        Clean architecture, beautiful UI, zero compromise.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#features" class="btn-primary" id="hero-cta-primary">Explore Features ↓</a>
+        <a href="/register" class="btn-secondary" id="hero-cta-secondary">Get Started Free</a>
+      </div>
+
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stats-inner">
+        <div>
+          <div class="stat-number">10k+</div>
+          <div class="stat-label">Happy Users</div>
+        </div>
+        <div>
+          <div class="stat-number">99.9%</div>
+          <div class="stat-label">Uptime SLA</div>
+        </div>
+        <div>
+          <div class="stat-number">&#60;50ms</div>
+          <div class="stat-label">Avg. Response</div>
+        </div>
+        <div>
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Support</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+
+      <div class="section-header">
+        <span class="section-label">Why choose us</span>
+        <h2 class="section-title">Everything you need, out of the box</h2>
+        <p class="section-desc">Carefully crafted features to accelerate your development workflow.</p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card" id="feature-security">
+          <div class="feature-icon">🔐</div>
+          <h3>Enterprise Security</h3>
+          <p>Spring Security integration with JWT, OAuth2, and role-based access control baked right in.</p>
+        </div>
+
+        <div class="feature-card" id="feature-database">
+          <div class="feature-icon">🗄️</div>
+          <h3>Smart Persistence</h3>
+          <p>Spring Data JPA with Hibernate for seamless ORM, migrations, and powerful query capabilities.</p>
+        </div>
+
+        <div class="feature-card" id="feature-ui">
+          <div class="feature-icon">🎨</div>
+          <h3>Beautiful Templates</h3>
+          <p>Thymeleaf server-side rendering with reusable layout fragments and dynamic expressions.</p>
+        </div>
+
+        <div class="feature-card" id="feature-validation">
+          <div class="feature-icon">✅</div>
+          <h3>Robust Validation</h3>
+          <p>Bean Validation with custom constraints, graceful error messages, and form binding support.</p>
+        </div>
+
+        <div class="feature-card" id="feature-api">
+          <div class="feature-icon">⚡</div>
+          <h3>REST-Ready</h3>
+          <p>Full MVC + REST support. Serve pages and JSON APIs from the same clean controller layer.</p>
+        </div>
+
+        <div class="feature-card" id="feature-deploy">
+          <div class="feature-icon">🚀</div>
+          <h3>Cloud-Native Deploy</h3>
+          <p>Packaged as a self-contained JAR. Deploy anywhere in seconds — Docker, K8s, or bare metal.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer (reused from layout) ── -->
+  <footer th:replace="~{layout :: footer}"></footer>
+
+</body>
+</html>
